@@ -40,6 +40,14 @@
 
 $route['default_controller'] = "main";
 $route['404_override'] = '';
+$route['admin'] = "admins/admin";
+$route['login'] = "admins/login";
+$route['showorder'] = 'admins/showorder';
+$route['dashboard'] = 'admins/dashboard';
+$route['adminordersearch'] = '';
+$route['adminproducts'] = 'admins/products';
+$route['adminproductsearch'] = '';
+$route['deleteproduct'] = '';
 
 
 /* End of file routes.php */
