@@ -9,6 +9,7 @@ class Admins extends CI_Controller {
 	}
 
 	public function index() {
+//		$this->load->model->('post');
 		$this->load->view('admin');
 	}
 
@@ -23,7 +24,7 @@ class Admins extends CI_Controller {
 	}
 
 	public function showorder($id) {
-//		$order = $this->database->get_order_by_id($id);
+	//	$order = $this->post->get_order_by_id($id);
 		$this->load->view('showorder', array('order' => $order));
 	}
 
