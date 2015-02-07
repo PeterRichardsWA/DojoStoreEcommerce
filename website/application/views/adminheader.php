@@ -105,16 +105,20 @@
 <body>
 
 <!-- if admin is logged in, show nav bar -->
-<?php if(isset($adminid)) {
-?>		<nav id="adminnavbar" class="nav navbar-default navbar-fixed-top">
+<?php if(!isset($adminid)) {
+?>		<nav id="adminnavbar" class="nav navbar navbar-default navbar-fixed-top">
 			<div class="container">
-				<div class="navbar-header">
-					<div class="navbar-brand">Dashboard</div>
+				<div class="nav navbar-header">
+					<div class="navbar-brand">Dashboard
+					</div>
+				</div>
+				<div class="nav navbar-nav">
 					<ul class="nav navbar-nav">
-						<li role="presentation"><a href="dashboard">Orders</a></li>
-						<li role="presentation"><a href="adminproducts">Products</a></li>
+						<li><a href="dashboard">Orders</a></li>
+						<li><a href="adminproducts">Products</a></li>
 					</ul>
-					<div class="navbar-right navbar-nav"><a href="logooff">log off</a></div>
+				</div>
+				<div class="nav navbar-right navbar-nav"><a href="logooff">log off</a>
 				</div>
 			</div>
 		</nav>

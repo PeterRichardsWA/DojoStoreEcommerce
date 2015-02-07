@@ -1,5 +1,35 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/*
+
+//kristy's database.php
+$active_group = 'default';
+$active_record = TRUE;
+
+if(ENVIRONMENT == 'production')
+{
+	$db['default']['hostname'] = 'localhost';
+	$db['default']['username'] = 'root';
+	$db['default']['password'] = '';
+	$db['default']['database'] = '';
+}
+else
+{
+	$db['default']['hostname'] = 'localhost';
+	$db['default']['username'] = 'root';
+	$db['default']['password'] = '';
+	$db['default']['database'] = 'test';
+}
+
+$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbprefix'] = '';
+$db['default']['pconnect'] = TRUE;
+$db['default']['db_debug'] = TRUE;
+$db['default']['cache_on'] = FALSE;
+$db['default']['cachedir'] = '';
+$db['default']['char_set'] = 'utf8';
+$db['default']['dbcollat'] = 'utf8_general_ci';
+$db['default']['swap_pre'] = '';
+$db['default']['autoinit'] = TRUE;
+$db['default']['stricton'] = FALSE;/*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
 | -------------------------------------------------------------------
@@ -44,7 +74,7 @@
 | The $active_record variables lets you determine whether or not to load
 | the active record class
 */
-
+/* Peter's database.php
 $active_group = 'default';
 $active_record = TRUE;
 
@@ -63,7 +93,7 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-
+*/
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
