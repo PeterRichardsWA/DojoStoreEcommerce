@@ -48,6 +48,7 @@ $route['adminordersearch'] = '';
 $route['adminproducts'] = 'admins/products';
 $route['adminproductsearch'] = '';
 $route['deleteproduct'] = '';
+$route['logoff'] = 'admins/logoff';
 
 
 /* End of file routes.php */

@@ -62,6 +62,7 @@
 
 <!-- if admin is logged in, show nav bar -->
 <?php if(isset($adminid)) {
+		echo $adminid; 
 ?>		<nav id="adminnavbar" class="nav navbar navbar-default navbar-fixed-top">
 			<div class="container">
 				<div class="nav navbar-header">
@@ -74,7 +75,7 @@
 						<li><a href="adminproducts">Products</a></li>
 					</ul>
 				</div>
-				<div class="nav navbar-right navbar-nav"><a href="logooff">log off</a>
+				<div class="nav navbar-right navbar-nav"><a href="logoff">log off</a>
 				</div>
 			</div>
 		</nav>
