@@ -73,6 +73,8 @@
 <body>
 	<div id="header">
 		Dojo eCommerce
+		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
+<!-- df1bb20cfee300205e1736a7652a2dd62f0c0da8 -->
 		<a href="/main/cart">View Cart</a>
 	</div>
 	<div id="sidebar">
