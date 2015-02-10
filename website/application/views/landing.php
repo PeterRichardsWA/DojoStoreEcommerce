@@ -1,5 +1,7 @@
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 	<title>Products</title>
 	<style type="text/css">
 		*{
@@ -38,17 +40,39 @@
 		#nav{
 			margin-left: 85%
 		}
-		td{
+
+
+		.cell {
 			border: 1px solid black;
-			height:250px;
-			width:250px;
-			padding:120px;
+			height:150px;
+			width:150px;
+			margin:15px;
+			display: inline-block;
+		}
+
+		.cell img {
+			width:150px;
+			height:150px;
+			margin:0px;
+		}
+
+		.infobanner {
+			border:1px solid black;
+			height:36px;
+			margin-top:-36px;
+			background-color:#bbbbbb;
+			opacity: 0.7;
+		}
+
+		.infocell {
+			display: inline-block;
+			width:45%;
 		}
 	</style>
 </head>
 <body>
 	<div id="header">
-		Dojo eCommerse
+		Dojo eCommerce
 		<a href="/main/cart">View Cart</a>
 	</div>
 	<div id="sidebar">
@@ -59,14 +83,14 @@
 		<h4>Categories:</h4>
 		<ul>
 			<li><a href='#'>All Products</a></li>
-			<li><a href='#'>TShirts</a></li>
-			<li><a href='#'>Shoes</a></li>
-			<li><a href='#'>Cups</a></li>
-			<li><a href='#'>Fruits</a></li>
+<?php 		foreach ($productcategories as $category) {
+?> 			<li><a href='#'>$categoryname (#)</a></li>
+<?php 		}
+?> 
 		</ul>
 	</div>
 	<div id="content">
-		<h2>Products (Page 1)</h2>
+		<h2>Products (Page $)</h2>
 		<div id="nav">
 		<a href="#">Prev</a>
 		<a href="#">Next</a>
@@ -74,19 +98,8 @@
 			<p>Sort By:<select><option>Price</option><option>Most Popular</option></select></p>
 		</form>
 		</div>
-		<table>
-			<?php
-			for($i=0;$i<3;$i++){
-				echo "<tr>";
-				for ($j=1;$j<6;$j++){
-					$ID=$j+$i*5;
-					echo"<td><a href='/main/info'>".$ID."</a>".$productInfo[$ID]."</td>";
-				}
-				echo "</tr>";
-			}
-			?>
-		</table>
-		
+<?php 	$this->load->view('productdisplay');
+?>		
 		<?php 
 			$pages=floor(count($productInfo)/15)+1;
 			for($i=1;$i<=$pages;$i++){

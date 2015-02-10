@@ -9,19 +9,28 @@ class Admins extends CI_Controller {
 	}
 
 	public function index() {
-		// if admin is logged in, take them to the dash, otherwise show login screen
+		// if admin is logged in, take them to the dash, otherwise, to the login screen
 		if (isset($this->session->adminid)) 
 			$this->dashboard();
 		else
-			$this->load->view('admin');
+			$this->login();
 	}
 
 	public function login() {
-		//placeholder until we make actual admin logins
-		$this->session->set_userdata('adminid', "Kristy");
-	//	$this->load->model('testDB');
-	//	$this->testDB->get_all_orders();
-		$this->dashboard();
+		$this->load->model('mydb'); 
+		$email = $this->input->post('email');
+		$password = $this->input->post('password');
+		
+		//checks info against db
+		$check = $this->mydb->get_admin_by_email($email); 
+		if($check && ($check['password']==$password)) {
+			//good info: log in
+			$this->dashboard();
+		} else {
+			//bad info: bounce back with an error message.
+			$this->session->set_flashdata('errors', "Credentials don't match. Try again.");
+			$this->load->view('admin');
+		} 
 	}
 
 	public function logoff() {
@@ -33,7 +42,9 @@ class Admins extends CI_Controller {
 
 	public function dashboard() {
 		$adminid = $this->session->userdata('adminid');
-		$this->load->view('dashboard', array('adminid' => $adminid));
+		$ordersindb = $this->myDB->get_all_orders();
+		$numresults = count($ordersindb);
+		$this->load->view('dashboard', array('adminid' => $adminid, "ordersindb" => $ordersindb, 'numresults' => $numresults));
 	}
 
 	public function showorder($id) {

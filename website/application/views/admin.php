@@ -8,7 +8,14 @@
 					<h1>Admin Login Page</h1>
 				</div>
 			</div>
-			<div class="row">
+<?php if (null !== ($this->session->flashdata('errors'))) {
+?>		<div class="row">
+			<div class="col-sm-10">
+				<h1 style="color:red"><?= $this->session->flashdata('errors') ?></h1>
+			</div>
+		</div>
+<?php }	
+?>			<div class="row">
 				<div class="col-sm-4 col-sm-offset-2">
 					<form role="form" action="login" method="post">
 						<div class="form-group">

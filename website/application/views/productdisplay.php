@@ -3,19 +3,19 @@
 	from db, pull image, name, price
 -->
 
-product display here
-<?php 		for($j = 0;$j<3;$j++){
+<?php 	
+		for($j = 0;$j<3;$j++){
 ?>
 			<div class="row">
 <?php 			for($i=0;$i<5;$i++){
 ?>				<div class="cell">
-						<img src="imgfromdb" alt="$imgname">
-						<div class="infobanner">
+<?php 				echo img("assets/images/".$productInfo[$i+$j]['file_path']); 
+?>						<div class="infobanner">
 							<div class="infocell">
-								<h4>$name</h4>
+								<h6><?=$productInfo[$i+$j]['product'] ?></h6> 
 							</div>
 							<div class="infocell">
-								<h4>$pricefromdb</h4>
+								<h4><?= $productInfo[$i+$j]['price'] ?></h4>
 							</div>
 						</div>
 					</div>

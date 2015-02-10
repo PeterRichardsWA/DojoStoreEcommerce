@@ -16,7 +16,7 @@ else
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
 	$db['default']['password'] = '';
-	$db['default']['database'] = 'test';
+	$db['default']['database'] = 'store';
 }
 
 $db['default']['dbdriver'] = 'mysql';

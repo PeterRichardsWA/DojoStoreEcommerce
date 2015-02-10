@@ -10,6 +10,8 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
+		$this->load->model('EcomData');
+		$productInfo = $this->EcomData->get_all_product_info();	
 		$this->load->view('landing',array('productInfo'=>$productInfo));
 	}
 	public function cart()

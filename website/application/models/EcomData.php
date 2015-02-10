@@ -22,6 +22,11 @@ class EcomData extends CI_model {
 	
 	}
 
+	public function get_all_product_info() {
+		return $this->db->query('SELECT * FROM products JOIN photos ON products.pid = photos.prod_id ORDER BY products.created_on DESC')->result_array();
+	
+	}
+
 	public function get_data_id($id) {
 		return $this->db->query('SELECT * FROM posts WHERE id = ?', array($id))->row_array();
 	
