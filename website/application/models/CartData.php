@@ -20,13 +20,20 @@ class CartData extends CI_model {
 	//
 	public function get_all_data($cartid=0) {
 		// get all data in the current cart
+<<<<<<< HEAD
 		return $this->db->query('SELECT * FROM carts LEFT JOIN products ON products.product=carts.name')->result_array();
+=======
+		return $this->db->query('')->result_array();
+>>>>>>> remotes/origin/master
 	
 	}
 
 	public function get_data_id($id=0) {
 		// get one item from cart.  Not sure why this is here?
+<<<<<<< HEAD
 		//Matt: This shouldn't be needed for anything, but I'll leave it for now.
+=======
+>>>>>>> remotes/origin/master
 		return $this->db->query('', array($id))->row_array();
 	
 	}
@@ -64,7 +71,11 @@ class CartData extends CI_model {
 	public function remove_data($id) {
 		// only put in title and desc since we are doing triggers for auto updates on timestamp and created
 		
+<<<<<<< HEAD
 		$query = 'DELETE FROM carts WHERE id = ?';
+=======
+		$query = 'DELETE FROM <table> WHERE id = ?';
+>>>>>>> remotes/origin/master
 		$values = array('id' => $id);
 
 		// doesn't return anything but a value to show it succeeded. if 0 then broke.
@@ -72,10 +83,13 @@ class CartData extends CI_model {
 
 	}
 
+<<<<<<< HEAD
 	public function clear_cart(){
 		//deletes the entire cart
 		return $this->db->query('DELETE FROM carts');
 	}
 
+=======
+>>>>>>> remotes/origin/master
 }
 ?>

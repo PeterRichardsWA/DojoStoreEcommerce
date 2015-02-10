@@ -48,8 +48,13 @@
 </head>
 <body>
 	<div id="header">
+<<<<<<< HEAD
 		Dojo eCommerce
 		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
+=======
+		Dojo eCommerse
+		<a href="/main/cart">View Cart</a>
+>>>>>>> remotes/origin/master
 	</div>
 	<div id="sidebar">
 		<form id="search" action="/main/search">
@@ -95,5 +100,11 @@
 		?>		
 
 	</div>
+<<<<<<< HEAD
+=======
+	<div id="footer">
+		<a href="/main/admin">Admin Login</a>
+	</div>
+>>>>>>> remotes/origin/master
 </body>
 </html>

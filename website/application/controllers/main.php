@@ -10,6 +10,7 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
+<<<<<<< HEAD
 		$cart=$this->cartTotal();
 		// product info will be obtained through a query.  Set to 0 for now to not error out.
 		$productInfo=0;
@@ -116,3 +117,22 @@ class Main extends CI_Controller {
 	}
 }
 
+=======
+		$this->load->view('landing',array('productInfo'=>$productInfo));
+	}
+	public function cart()
+	{
+		$this->load->view('cart',array('cartInfo'=>$cartInfo));
+	}
+	public function info()
+	{
+		$this->load->view('productinfo');
+	}
+	public function admin()
+	{
+		$this->load->view('login');
+	}
+}
+
+//end of main controller
+>>>>>>> remotes/origin/master
