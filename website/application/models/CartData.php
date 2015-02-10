@@ -24,7 +24,7 @@ class CartData extends CI_model {
 	
 	}
 
-	public function get_data_id($id=0) {
+/*	public function get_data_id($id=0) {
 		// get one item from cart.  Not sure why this is here?
 		//Matt: This shouldn't be needed for anything, but I'll leave it for now.
 		return $this->db->query('', array($id))->row_array();
@@ -75,6 +75,6 @@ class CartData extends CI_model {
 	public function clear_cart(){
 		//deletes the entire cart
 		return $this->db->query('DELETE FROM carts');
-	}
-
+	} */
+} 
 ?>

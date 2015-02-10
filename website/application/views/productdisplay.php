@@ -5,21 +5,22 @@
 
 <?php 	
 		for($j = 0;$j<3;$j++){
-?>
-			<div class="row">
+?>			<div class="row">
 <?php 			for($i=0;$i<5;$i++){
-?>				<div class="cell">
-<?php 				echo img("assets/images/".$productInfo[$i+$j]['file_path']); 
-?>						<div class="infobanner">
-							<div class="infocell">
-								<h6><?=$productInfo[$i+$j]['product'] ?></h6> 
-							</div>
-							<div class="infocell">
-								<h4><?= $productInfo[$i+$j]['price'] ?></h4>
+					if($i+($j*5) < $numproducts) {
+?>						<div class="cell">
+<?php 						echo img("assets/images/".$productInfo[$i+($j*5)]['file_path']); 
+?>							<div class="infobanner">
+								<div class="infocell">
+									<h6><?=$productInfo[$i+$j]['product'] ?></h6> 
+								</div>
+								<div class="infocell">
+									<h4><?= $productInfo[$i+$j]['price'] ?></h4>
+								</div>
 							</div>
 						</div>
-					</div>
-<?php 			}
-			}
+<?php 				} //if
+				} //for-i
+			} //for-j
 ?>
 </div> -->
