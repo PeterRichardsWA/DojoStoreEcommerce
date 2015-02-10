@@ -32,6 +32,10 @@ class EcomData extends CI_model {
 	
 	}
 
+	public function get_category_info() {
+		return $this->db->query('SELECT count(*), category FROM products 
+			JOIN categories ON products.catid = categories.id GROUP BY categories.id')->result_array();
+	}
 	//
 	// *************************************************************************
 	// functions that change data in the database
