@@ -33,13 +33,13 @@ class EcomData extends CI_model {
 	}
 
 	public function get_category_info() {
-		return $this->db->query('SELECT count(*), category FROM products 
+		return $this->db->query('SELECT count(*) AS count, category FROM products 
 			JOIN categories ON products.catid = categories.id GROUP BY categories.id')->result_array();
 	}
 
 	public function get_select_category_info($keyword) {
 		$keyword = "%$keyword%";	
-		return $this->db->query("SELECT count(*), category FROM products 
+		return $this->db->query("SELECT count(*) AS count, category FROM products 
 		JOIN photos on photos.prod_id = products.pid 
 		JOIN categories ON products.catid = categories.id 
 		WHERE products.description LIKE ? OR products.product LIKE ?
@@ -51,8 +51,8 @@ class EcomData extends CI_model {
 	public function get_from_db_by_keyword($keyword) {
 		$keyword = "%$keyword%";	
 		return $this->db->query("SELECT * FROM products 
-		JOIN photos on photos.prod_id = products.pid 
-		JOIN categories ON products.catid = categories.id 
+		LEFT JOIN photos on photos.prod_id = products.pid 
+		LEFT JOIN categories ON products.catid = categories.id 
 		WHERE products.description LIKE ? OR products.product LIKE ?
 		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ?", 
 		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();

@@ -2,7 +2,7 @@
 	make 5x3 
 	from db, pull image, name, price
 -->
-
+<div id="productdisplaygrid">
 <?php 	
 		for($j = 0;$j<3;$j++){
 ?>			<div class="row">
@@ -23,4 +23,5 @@
 				} //for-i
 			} //for-j
 ?>
-</div>
+			</div>
+		</div>

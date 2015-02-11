@@ -1,5 +1,6 @@
 <html>
 <head>
+	<meta charset="utf-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 	<title>Products</title>
@@ -76,6 +77,40 @@
 			width:45%;
 		}
 	</style>
+	<script>
+		function draw_pages(results) {
+			//divide results by 15 to determine # of pages
+			//append html links to bottom of screen
+		}
+
+		$(document).on('submit', '#search', function(){	
+			$.post(
+				$(this).attr('action'),
+				$(this).serialize(),
+				function(data){
+					console.log(data);
+					$('#category').html("<li><a href='/'>All Products</a></li>");
+					$(data.categories).each(function(){
+						$('#category').append(
+							"<li><a href='search/"+this.category+"'>"+this.category+" ("+this.count+")</a></li>");
+					});
+					if (data.results.length > 15) {
+							draw_pages(data.results.length);
+					}
+					$('#productdisplaygrid').html('');
+					$(data.results).each(function(){	
+							$('#productdisplaygrid').append(
+								"<div class='cell'>"+
+								"<img src='assets/images/"+this.file_path+"'>"+
+								"<div class='infobanner'><div class='infocell'>"+
+								"<h6>"+this.product+"</h6></div><div class='infocell'>"+
+								"<h4>"+this.price+"</h4></div></div></div></div>");
+					}); //results.each
+				}, "json" //data
+				);
+			return false;
+		});
+	</script>
 </head>
 <body>
 	<div id="header">
@@ -89,11 +124,11 @@
 			<input type="submit" value="Search">
 		</form>
 		<h4>Categories:</h4>
-		<ul>
+		<ul id="category">
 			<li><a href='/'>All Products</a></li>
-<?php 		foreach ($categories as $category) {
-?> 			<li><a href='#'><?=$category['category']?> (<?= $category['count(*)']?>)</a></li>
-<?php 		}
+<?php 			foreach ($categories as $category) {
+?> 					<li><a href='#'><?=$category['category']?> (<?= $category['count']?>)</a></li>
+<?php 			}
 ?> 
 		</ul>
 	</div>
