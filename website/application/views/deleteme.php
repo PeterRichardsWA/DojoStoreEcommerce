@@ -1,10 +1,7 @@
 <html>
 <head>
-<<<<<<< HEAD
-=======
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 	<title>Products</title>
 	<style type="text/css">
 		*{
@@ -43,13 +40,6 @@
 		#nav{
 			margin-left: 85%
 		}
-<<<<<<< HEAD
-		td{
-			border: 1px solid black;
-			height:250px;
-			width:250px;
-			padding:120px;
-=======
 
 
 		.cell {
@@ -77,7 +67,6 @@
 		.infocell {
 			display: inline-block;
 			width:45%;
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 		}
 	</style>
 </head>
@@ -85,11 +74,8 @@
 	<div id="header">
 		Dojo eCommerce
 		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
-<<<<<<< HEAD
-=======
 <!-- df1bb20cfee300205e1736a7652a2dd62f0c0da8 -->
 		<a href="/main/cart">View Cart</a>
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 	</div>
 	<div id="sidebar">
 		<form id="search" action="/main/search">
@@ -99,13 +85,8 @@
 		<h4>Categories:</h4>
 		<ul>
 			<li><a href='#'>All Products</a></li>
-<<<<<<< HEAD
-			<?php 		foreach ($productcategories as $category) {
-?>			<li><a href='#'>$categoryname (#)</a></li>
-=======
 <?php 		foreach ($productcategories as $category) {
 ?> 			<li><a href='#'>$categoryname (#)</a></li>
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 <?php 		}
 ?> 
 		</ul>
@@ -119,13 +100,8 @@
 			<p>Sort By:<select><option>Price</option><option>Most Popular</option></select></p>
 		</form>
 		</div>
-<<<<<<< HEAD
-		<?php 	$this->load->view('productdisplay');
-?>	
-=======
 <?php 	$this->load->view('productdisplay');
 ?>		
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 		<?php 
 			$pages=floor(count($productInfo)/15)+1;
 			for($i=1;$i<=$pages;$i++){
@@ -134,11 +110,8 @@
 		?>		
 
 	</div>
-<<<<<<< HEAD
-=======
 	<div id="footer">
 		<a href="/main/admin">Admin Login</a>
 	</div>
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 </body>
 </html>
