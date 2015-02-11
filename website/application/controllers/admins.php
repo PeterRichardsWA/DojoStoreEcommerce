@@ -13,11 +13,11 @@ class Admins extends CI_Controller {
 		if (isset($this->session->adminid)) 
 			$this->dashboard();
 		else
-			$this->login();
+			$this->load->view('admin');
 	}
 
 	public function login() {
-	/*	$this->load->model('mydb'); 
+		$this->load->model('mydb'); 
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
 		
@@ -29,9 +29,9 @@ class Admins extends CI_Controller {
 		} else {
 			//bad info: bounce back with an error message.
 			$this->session->set_flashdata('errors', "Credentials don't match. Try again.");
-			$this->load->view('admin'); */
+			$this->load->view('admin'); 
 			$this->dashboard();
-		 
+		}
 	}
 
 	public function logoff() {

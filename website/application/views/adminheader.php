@@ -75,7 +75,7 @@
 						<li><a href="/adminproducts">Products</a></li>
 					</ul>
 				</div>
-				<div class="nav navbar-right navbar-nav"><a href="logoff">log off</a>
+				<div class="nav navbar-right navbar-nav"><a href="/logoff">log off</a>
 				</div>
 			</div>
 		</nav>
