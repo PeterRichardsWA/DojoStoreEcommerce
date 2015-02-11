@@ -77,6 +77,10 @@ class EcomData extends CI_model {
 		}
 		return $total;
 	}
+
+	public function get_order_by_id($id) {
+		return $this->db->query('SELECT * FROM orders WHERE oid = ?', array($id))->row_array();
+	}
 	//
 	// *************************************************************************
 	// functions that change data in the database

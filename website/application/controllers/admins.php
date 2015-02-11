@@ -56,7 +56,8 @@ class Admins extends CI_Controller {
 	}
 
 	public function showorder($id) {
-	//	$order = $this->post->get_order_by_id($id);
+		$this->load->model('EcomData');
+		$order = $this->EcomData->get_order_by_id($id);
 		$this->load->view('showorder', array('order' => $order, 'adminid' => $this->session->userdata('adminid')));
 	}
 
