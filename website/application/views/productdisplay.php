@@ -22,4 +22,4 @@ product display here
 <?php 			}
 			}
 ?>
-</div> -->
+</div>

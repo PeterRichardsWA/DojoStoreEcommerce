@@ -6,6 +6,13 @@
 			margin: 0px;
 			padding: 0px;
 		}
+
+		h6 a {
+			float:right;
+			text-decoration: none;
+			color:silver;
+			margin:60px;
+		}
 		#header{
 			background-color: black;
 			color:white;
@@ -50,6 +57,10 @@
 	<div id="header">
 		Dojo eCommerce
 		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
+<<<<<<< HEAD
+=======
+		<a href="/main/cart">View Cart</a>
+>>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 	</div>
 	<div id="sidebar">
 		<form id="search" action="/main/search">
@@ -58,9 +69,15 @@
 		</form>
 		<h4>Categories:</h4>
 		<ul>
+<<<<<<< HEAD
 			<li><a href='#'>All Products</a></li>
 			<?php 		foreach ($productcategories as $category) {
 ?>			<li><a href='#'>$categoryname (#)</a></li>
+=======
+			<li><a href='/'>All Products</a></li>
+<?php 		foreach ($categories as $category) {
+?> 			<li><a href='#'><?=$category['category']?> (<?= $category['count(*)']?>)</a></li>
+>>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 <?php 		}
 ?> 
 		</ul>
@@ -84,5 +101,12 @@
 		?>		
 
 	</div>
+<<<<<<< HEAD
+=======
+</div></div>
+	<div id="footer">
+		<h6><a href="admin">Admin Login</a></h6>
+	</div>
+>>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 </body>
 </html>

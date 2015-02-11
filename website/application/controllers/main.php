@@ -13,6 +13,7 @@ class Main extends CI_Controller {
 
 		$this->load->model('EcomData');
 		$productInfo = $this->EcomData->get_all_product_info();	
+<<<<<<< HEAD
 
 		$cart=$this->cartTotal();
 		// product info will be obtained through a query.  Set to 0 for now to not error out.
@@ -20,6 +21,14 @@ class Main extends CI_Controller {
 		$this->load->view('landing',array('productInfo'=>$productInfo,'cart'=>$cart));
 
 	}
+=======
+		$categories = $this->EcomData->get_category_info();
+		$cart=$this->cartTotal();
+		$this->load->view('landing',array('productInfo'=>$productInfo,'cart'=>$cart, 'numproducts' => count($productInfo), 'categories' => $categories));
+
+	}
+
+>>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 	public function cartTotal()
 	{
 		//this function calculates the cart info to be displayed in the header
@@ -124,7 +133,11 @@ class Main extends CI_Controller {
 	public function admin()
 	{
 		$this->load->view('login');
+<<<<<<< HEAD
 	}
+=======
+	} 
+>>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 }
 
 //end of main controller

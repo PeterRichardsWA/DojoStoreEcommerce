@@ -75,6 +75,11 @@ class CartData extends CI_model {
 	public function clear_cart(){
 		//deletes the entire cart
 		return $this->db->query('DELETE FROM carts');
+<<<<<<< HEAD
 	}
 }
+=======
+	} 
+} 
+>>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 ?>
