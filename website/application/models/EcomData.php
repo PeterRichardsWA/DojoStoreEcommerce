@@ -57,6 +57,26 @@ class EcomData extends CI_model {
 		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ?", 
 		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
 	}
+
+	public function get_all_orders() {
+		return $this->db->query('SELECT *  FROM orders 
+			JOIN pivot_order_products on order_id = orders.oid
+			JOIN products on pivot_order_products.product_id = products.pid
+			GROUP BY orders.oid
+			ORDER BY orders.created_at DESC')->result_array();
+	}
+
+	public function get_order_total($oid) {
+		$total = 0;
+		$results = $this->db->query("Select quantity, price from orders
+			join pivot_order_products on order_id = orders.oid
+ 			join products on products.pid = pivot_order_products.product_id
+			where orders.oid = ?", $oid)->result_array();
+		foreach ($results as $result) {
+			$total += $result['price'] * $result['quantity'];
+		}
+		return $total;
+	}
 	//
 	// *************************************************************************
 	// functions that change data in the database

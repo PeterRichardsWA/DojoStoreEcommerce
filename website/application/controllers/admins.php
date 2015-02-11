@@ -17,7 +17,7 @@ class Admins extends CI_Controller {
 	}
 
 	public function login() {
-		$this->load->model('mydb'); 
+	/*	$this->load->model('mydb'); 
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
 		
@@ -29,8 +29,9 @@ class Admins extends CI_Controller {
 		} else {
 			//bad info: bounce back with an error message.
 			$this->session->set_flashdata('errors', "Credentials don't match. Try again.");
-			$this->load->view('admin');
-		} 
+			$this->load->view('admin'); */
+			$this->dashboard();
+		 
 	}
 
 	public function logoff() {
@@ -41,10 +42,17 @@ class Admins extends CI_Controller {
 	}
 
 	public function dashboard() {
+		$this->load->model('EcomData');
 		$adminid = $this->session->userdata('adminid');
-		$ordersindb = $this->myDB->get_all_orders();
+		$ordersindb = $this->EcomData->get_all_orders();
 		$numresults = count($ordersindb);
-		$this->load->view('dashboard', array('adminid' => $adminid, "ordersindb" => $ordersindb, 'numresults' => $numresults));
+		//calculate total of order and add it to the data
+		$totalarray = [];
+		foreach ($ordersindb as $order) {
+			$total = $this->EcomData->get_order_total($order['oid']);
+			$totalarray[$order['oid']] = $total;
+		}
+		$this->load->view('dashboard', array('adminid' => $adminid, "ordersindb" => $ordersindb, 'numresults' => $numresults, 'totalarray' => $totalarray));
 	}
 
 	public function showorder($id) {

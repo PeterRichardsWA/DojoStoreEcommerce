@@ -38,11 +38,12 @@
 					<tbody>
 <?php 					foreach($ordersindb as $row) {
 	?>						<tr>
-								<td><a href="showorder/<?= $row['id'] ?>"><?= $row['id'] ?></a></td>
-								<td><?= $row['name'] ?></td>
-								<td><?= $row['date'] ?></td>
-								<td><?= $row['address'] ?></td>
-								<td><?= $row['total'] ?></td>
+								<td><a href="showorder/<?= $row['oid'] ?>"><?= $row['oid'] ?></a></td>
+								<td><?= $row['bill_name'] ?></td>
+								<td><?= $row['created_at'] ?></td>
+								<td><?= $row['bill_street']." ".$row['bill_street2']. ", ".
+								$row['bill_city']. " ". $row['bill_state']." ". $row['bill_zip'] ?></td>
+								<td><?= $totalarray[$row['oid']] ?></td>
 								<TD>
 									<!-- default value of order status needs to be set by jquery: .attr("selected","true") -->
 									<form role="form" action="changeorderstatus" method="post">
