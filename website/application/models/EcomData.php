@@ -23,7 +23,7 @@ class EcomData extends CI_model {
 	}
 
 	public function get_all_product_info() {
-		return $this->db->query('SELECT * FROM products JOIN photos ON products.pid = photos.prod_id ORDER BY products.created_on DESC')->result_array();
+		return $this->db->query('SELECT * FROM products LEFT JOIN photos ON products.pid = photos.prod_id ORDER BY products.created_on DESC')->result_array();
 	
 	}
 
@@ -35,6 +35,27 @@ class EcomData extends CI_model {
 	public function get_category_info() {
 		return $this->db->query('SELECT count(*), category FROM products 
 			JOIN categories ON products.catid = categories.id GROUP BY categories.id')->result_array();
+	}
+
+	public function get_select_category_info($keyword) {
+		$keyword = "%$keyword%";	
+		return $this->db->query("SELECT count(*), category FROM products 
+		JOIN photos on photos.prod_id = products.pid 
+		JOIN categories ON products.catid = categories.id 
+		WHERE products.description LIKE ? OR products.product LIKE ?
+		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ? 
+		GROUP BY categories.id", 
+		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
+	}
+
+	public function get_from_db_by_keyword($keyword) {
+		$keyword = "%$keyword%";	
+		return $this->db->query("SELECT * FROM products 
+		JOIN photos on photos.prod_id = products.pid 
+		JOIN categories ON products.catid = categories.id 
+		WHERE products.description LIKE ? OR products.product LIKE ?
+		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ?", 
+		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
 	}
 	//
 	// *************************************************************************

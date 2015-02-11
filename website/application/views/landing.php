@@ -84,7 +84,7 @@
 		<a href="/main/cart">View Cart</a>
 	</div>
 	<div id="sidebar">
-		<form id="search" action="/main/search">
+		<form id="search" action="search" method="post">
 			<input type="text" name="product">
 			<input type="submit" value="Search">
 		</form>

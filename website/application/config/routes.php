@@ -49,7 +49,7 @@ $route['adminproducts'] = 'admins/products';
 $route['adminproductsearch'] = '';
 $route['deleteproduct'] = '';
 $route['logoff'] = 'admins/logoff';
-
+$route['search'] = 'filters/search';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

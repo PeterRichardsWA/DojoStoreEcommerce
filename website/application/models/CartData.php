@@ -18,7 +18,7 @@ class CartData extends CI_model {
 	// Get data files towards top of file as they will be used more than
 	// write functions
 	//
-	public function get_all_data($cartid=0) {
+/*	public function get_all_data($cartid=0) {
 		// get all data in the current cart
 		return $this->db->query('SELECT * FROM carts LEFT JOIN products ON products.product=carts.name')->result_array();
 	
@@ -75,6 +75,6 @@ class CartData extends CI_model {
 	public function clear_cart(){
 		//deletes the entire cart
 		return $this->db->query('DELETE FROM carts');
-	} 
+	} */ 
 } 
 ?>
