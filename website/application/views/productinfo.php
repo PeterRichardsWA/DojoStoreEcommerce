@@ -54,18 +54,8 @@
 </head>
 <body>
 	<div id="header">
-<<<<<<< HEAD
 		Dojo eCommerce
 		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
-=======
-<<<<<<< HEAD
-		Dojo eCommerce
-		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
-=======
-		Dojo eCommerse
-		<a href="/main/cart">View Cart</a>
->>>>>>> remotes/origin/master
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 	</div>
 	<a href="/">Go Back</a>
 	<h1>(Product Name Here)</h1>
@@ -80,14 +70,7 @@
 		<div id="description">
 			description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...description about the product...
 			<form action="/main/add" method="post">
-<<<<<<< HEAD
 				<input type="hidden" name="product_id" value=<?php $product['id'] ?> />
-=======
-<<<<<<< HEAD
-				<input type="hidden" name="product_id" value=<?php $product['id'] ?> />
-=======
->>>>>>> remotes/origin/master
->>>>>>> 3b2292a5f192a0f38576bf3d36134087918be07b
 				<input type="number" name="quantity" min="1">
 				<input type="submit" value="Add to Cart">
 			</form>
