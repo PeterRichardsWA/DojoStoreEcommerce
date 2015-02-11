@@ -23,12 +23,14 @@ class EcomData extends CI_model {
 	}
 
 	public function get_all_product_info() {
-		return $this->db->query('SELECT * FROM products LEFT JOIN photos ON products.pid = photos.prod_id ORDER BY products.created_on DESC')->result_array();
+		return $this->db->query('SELECT * FROM products LEFT JOIN photos ON products.pid = photos.prod_id GROUP BY products.pid ORDER BY products.created_on DESC, photos.sort ASC')->result_array();
 	
 	}
 
-	public function get_data_id($id) {
-		return $this->db->query('SELECT * FROM posts WHERE id = ?', array($id))->row_array();
+	public function get_product_by_id($id) {
+		return $this->db->query('SELECT * FROM products 
+		LEFT JOIN photos ON photos.prod_id = products.pid
+		WHERE pid = ? ', $id)->row_array();
 	
 	}
 

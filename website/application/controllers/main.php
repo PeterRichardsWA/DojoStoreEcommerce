@@ -15,7 +15,7 @@ class Main extends CI_Controller {
 		$productInfo = $this->EcomData->get_all_product_info();	
 		$categories = $this->EcomData->get_category_info();
 		$cart=$this->cartTotal();
-		$this->load->view('landing',array('productInfo'=>$productInfo,/*'cart'=>$cart ,*/ 'numproducts' => count($productInfo), 'categories' => $categories));
+		$this->load->view('landing',array('productInfo'=>$productInfo,'cart'=>$cart , 'numproducts' => count($productInfo), 'categories' => $categories));
 
 	}
 
@@ -24,7 +24,7 @@ class Main extends CI_Controller {
 		//this function calculates the cart info to be displayed in the header
 		//Fully Functional
 		$this->load->model('CartData');
-	//	$cartInfo=$this->CartData->get_all_data($cartid=0);
+		$cartInfo=$this->CartData->get_all_data($cartid=0);
 		$items=0;
 		$total=0;
 		foreach ($cartInfo as $item) {
@@ -124,6 +124,11 @@ class Main extends CI_Controller {
 	{
 		$this->load->view('login');
 	} 
+
+	public function productinfogpg($id) {
+		$data = $this->EcomData->get_product_by_id($id);
+		$this->load->view('productinfo', array('data' =>$data));
+	}
 }
 
 //end of main controller

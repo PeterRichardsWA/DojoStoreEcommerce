@@ -63,11 +63,10 @@
 			height:150px;
 			margin:0px;
 		}
-
 		.infobanner {
 			border:1px solid black;
 			height:36px;
-			margin-top:-36px;
+			margin-top:-56px;
 			background-color:#bbbbbb;
 			opacity: 0.7;
 		}

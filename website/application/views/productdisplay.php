@@ -9,8 +9,9 @@
 <?php 			for($i=0;$i<5;$i++){
 					if($i+($j*5) < $numproducts) {
 ?>						<div class="cell">
-<?php 						echo img("assets/images/".$productInfo[$i+($j*5)]['file_path']); 
-?>							<div class="infobanner">
+ 						<a href='products/<?=$productInfo[$i+($j*5)]['pid'] ?>'>
+							<?php echo img("assets/images/".$productInfo[$i+($j*5)]['file_path'])?></a>; 
+							<div class="infobanner">
 								<div class="infocell">
 									<h6><?=$productInfo[$i+$j]['product'] ?></h6> 
 								</div>
