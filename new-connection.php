@@ -15,6 +15,10 @@ if ($connection->connect_errno)
     die("Failed to connect to MySQL: (" . $connection->connect_errno . ") " . $connection->connect_error);
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 //used when expecting multiple results
 function fetch_all($query)
 {

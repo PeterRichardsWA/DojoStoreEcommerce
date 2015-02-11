@@ -2,6 +2,7 @@
 
 class Main extends CI_Controller {
 
+<<<<<<< HEAD
 	// ALL MODELS ARE LOADED IN AUTOLOAD during config setup.
 
 	// 	$this->output->enable_profiler();
@@ -46,11 +47,36 @@ class Main extends CI_Controller {
 		//this function calculates the cart info to be displayed in the header
 		//Fully Functional
 		$cartInfo = $this->CartData->get_all_data($cartid);
+=======
+	// public function __construct()
+	// {
+	// 	parent::__construct();
+	// 	$this->output->enable_profiler();
+	// }
+
+	public function index()
+	{
+
+		$this->load->model('EcomData');
+		$productInfo = $this->EcomData->get_all_product_info();	
+		$categories = $this->EcomData->get_category_info();
+		$cart=$this->cartTotal();
+		$this->load->view('landing',array('productInfo'=>$productInfo,/*'cart'=>$cart ,*/ 'numproducts' => count($productInfo), 'categories' => $categories));
+
+	}
+
+	public function cartTotal()
+	{
+		//this function calculates the cart info to be displayed in the header
+		//Fully Functional
+		$this->load->model('CartData');
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 	//	$cartInfo=$this->CartData->get_all_data($cartid=0);
 		$items=0;
 		$total=0;
 		foreach ($cartInfo as $item) {
 			$items++;
+<<<<<<< HEAD
 			$total = $total+$item['price']*$item['quantity'];
 		}
 		return array('items'=>$items,'total'=>$total);
@@ -61,23 +87,46 @@ class Main extends CI_Controller {
 		//Fully Functional
 		$cartInfo = $this->CartData->get_all_data($cartid);
 		$cart = $this->cartTotal($cartid);
+=======
+			$total=$total+$item['price']*$item['quantity'];
+		}
+		return array('items'=>$items,'total'=>$total);
+	}
+	public function cart()
+	{
+		//load necessary information and display the Cart page
+		//Fully Functional
+		$this->load->model('CartData');
+		$cartInfo=$this->CartData->get_all_data($cartid=0);
+		$cart=$this->cartTotal();
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 		$this->load->view('cart',array('cartInfo'=>$cartInfo,'cart'=>$cart));
 	}
 	public function info()
 	{
 		//Load the view for the Product Info page.
+<<<<<<< HEAD
 		$cart = $this->cartTotal($cartid);
+=======
+		$cart=$this->cartTotal();
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 		$this->load->view('productinfo',array('cart'=>$cart));
 	}
 	public function add(){
 		//from Product Info page.  This will add an item to the cart, but not currently functional.
+<<<<<<< HEAD
 		$product = $this->input->post('product_id');
 		$quantity = $this->input->post('quantity');
+=======
+		$product=$this->input->post('product_id');
+		$quantity=$this->input->post('quantity');
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 	}
 	public function remove($id)
 	{
 		//deletes a single item from the cart.  
 		//Fully functional.
+<<<<<<< HEAD
 		$this->load->CartData->remove_from_cart($id);
 		redirect('/main/cart');
 	}
@@ -86,6 +135,18 @@ class Main extends CI_Controller {
 		//deletes the entire cart.  
 		//Fully Functional.
 		$this->load->CartData->clear_cart($cartid);
+=======
+		$this->load->model('CartData');
+		$this->CartData->remove_data($id);
+		redirect('/main/cart');
+	}
+	public function delete()
+	{
+		//deletes the entire cart.  
+		//Fully Functional.
+		$this->load->model('CartData');
+		$this->CartData->clear_cart();
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 		redirect('/');
 	}
 	public function order()
@@ -132,15 +193,24 @@ class Main extends CI_Controller {
 		$billing=$this->session->userdata('billing');
 		$card=$this->session->userdata('card');
 		$total=$this->session->userdata('total');
+<<<<<<< HEAD
 		unset($this->session->userdata);  // does this work or do we use destroy_session??
 		$this->load->CartData->clear_cart($cartid);
+=======
+		unset($this->session->userdata);
+		$this->load->model('CartData');
+		$this->CartData->clear_cart();
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 		$this->load->view('confirmation',array('shipping'=>$shipping,'billing'=>$billing,'card'=>$card,'total'=>$total));
 	}
 
 
 	public function admin()
 	{
+<<<<<<< HEAD
 		// show admin login
+=======
+>>>>>>> 4729fe55dece6c1d9356d0ed120b4fd8ead7ec07
 		$this->load->view('login');
 	} 
 }
