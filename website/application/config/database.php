@@ -9,14 +9,14 @@ if(ENVIRONMENT == 'production')
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
 	$db['default']['password'] = '';
-	$db['default']['database'] = '';
+	$db['default']['database'] = 'ecommerse';
 }
 else
 {
 	$db['default']['hostname'] = 'localhost';
 	$db['default']['username'] = 'root';
 	$db['default']['password'] = '';
-	$db['default']['database'] = 'store';
+	$db['default']['database'] = 'ecommerse';
 }
 
 $db['default']['dbdriver'] = 'mysql';

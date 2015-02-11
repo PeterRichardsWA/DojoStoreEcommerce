@@ -1,12 +1,13 @@
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 	<title>Products</title>
 	<style type="text/css">
 		*{
 			margin: 0px;
 			padding: 0px;
 		}
-
 		h6 a {
 			float:right;
 			text-decoration: none;
@@ -45,11 +46,28 @@
 		#nav{
 			margin-left: 85%
 		}
-		td{
+		.cell {
 			border: 1px solid black;
-			height:250px;
-			width:250px;
-			padding:120px;
+			height:150px;
+			width:150px;
+			margin:15px;
+			display: inline-block;
+		}
+		.cell img {
+			width:150px;
+			height:150px;
+			margin:0px;
+		}
+		.infobanner {
+			border:1px solid black;
+			height:36px;
+			margin-top:-36px;
+			background-color:#bbbbbb;
+			opacity: 0.7;
+		}
+		.infocell {
+			display: inline-block;
+			width:45%;
 		}
 	</style>
 </head>
@@ -57,10 +75,7 @@
 	<div id="header">
 		Dojo eCommerce
 		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
-<<<<<<< HEAD
-=======
 		<a href="/main/cart">View Cart</a>
->>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 	</div>
 	<div id="sidebar">
 		<form id="search" action="search" method="post">
@@ -69,15 +84,9 @@
 		</form>
 		<h4>Categories:</h4>
 		<ul>
-<<<<<<< HEAD
-			<li><a href='#'>All Products</a></li>
-			<?php 		foreach ($productcategories as $category) {
-?>			<li><a href='#'>$categoryname (#)</a></li>
-=======
 			<li><a href='/'>All Products</a></li>
 <?php 		foreach ($categories as $category) {
 ?> 			<li><a href='#'><?=$category['category']?> (<?= $category['count(*)']?>)</a></li>
->>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 <?php 		}
 ?> 
 		</ul>
@@ -91,8 +100,8 @@
 			<p>Sort By:<select><option>Price</option><option>Most Popular</option></select></p>
 		</form>
 		</div>
-		<?php 	$this->load->view('productdisplay');
-?>	
+<?php 	$this->load->view('productdisplay');
+?>		
 		<?php 
 			$pages=floor(count($productInfo)/15)+1;
 			for($i=1;$i<=$pages;$i++){
@@ -101,12 +110,9 @@
 		?>		
 
 	</div>
-<<<<<<< HEAD
-=======
 </div></div>
 	<div id="footer">
 		<h6><a href="admin">Admin Login</a></h6>
 	</div>
->>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 </body>
 </html>

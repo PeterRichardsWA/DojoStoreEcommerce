@@ -3,90 +3,107 @@
 // MODEL for Ecommerce Site.  Kristy/Matt/Peter
 //
 class EcomData extends CI_model {
-
+	// model allows for methods to manipulate data: add/update/remove data
+	// to view the data is: one record, many records
+	//
+	// use session id to hold cart information.  once cart times out after session ends,
+	// we need to clear the unused carts.
+	//
+	
 	//
 	// *******************************************************************
 	// Get data files towards top of file as they will be used more than
 	// write functions
 	//
-	// get all products in catalog order by category and then product
-	// 
-	public function get_all_products() {
-		
-		$query = 'SELECT products.pid, products.catid, categories.id, categories.active, categories.category, products.inventory, ';
-		$query = $query.'products.price, products.taxable, products.product, products.description, photos.sort, photos.file_path, ';
-		$query = $query.'photos.caption FROM categories LEFT OUTER JOIN products ON categories.id = products.catid ';
-	 	$query = $query.'LEFT OUTER JOIN photos ON products.pid = photos.prod_id WHERE pid is not null order by catid, product';
-
-		return $this->db->query($query)->result_array(); // return ALL products organized by category, products and all photos.
-	}
-
-	// get an individual row of products from this productid.
-	public function get_data_id($pid = 0) {
+	public function get_all_data() {
+		return $this->db->query('SELECT * FROM posts ORDER BY created_at DESC')->result_array();
 	
-		$query = 'SELECT photos.main, photos.file_path, photos.caption, products.price, ';
-		$query = $query.'products.taxable, products.product, products.description, products.inventory, categories.active, ';
-		$query = $query.'categories.category, products.pid FROM categories RIGHT OUTER JOIN products ON categories.cid = products.catid ';
-		$query = $query.'RIGHT OUTER JOIN photos ON products.pid = photos.prod_id ';
-		$query = $query.'WHERE products.pid = ? AND price is not null ORDER BY photos.main DESC';
-		// echo $query;
-		// exit;
-		return $this->db->query($query, array($pid))->result_array();  // array of this row!
 	}
-
-	// show all related products to this product id.
-	public function get_related_prod($pid=0) {
-
-		$query = 'SELECT products.catid, products.product, products.pid, pivot_related_prods.ref_prod_id ';
-		$query = $query.'FROM pivot_related_prods LEFT OUTER JOIN products ON pivot_related_prods.rel_prod_id = products.pid ';
-		$query = $query.'WHERE pivot_related_prods.ref_prod_id = ?';
-		$values = array($pid);
-
-		return $this->db->query($query, $values)->result_array(); // give us a result array back
+	public function get_all_product_info() {
+		return $this->db->query('SELECT * FROM products LEFT JOIN photos ON products.pid = photos.prod_id ORDER BY products.created_on DESC')->result_array();
+	
 	}
-
-	// All related categories based on this products category id.
-	public function get_related_cats($cid=0) {
-
-		$query = 'SELECT pivot_related_cats.ref_category, categories.cid, categories.active, categories.category ';
-		$query = $query.'FROM pivot_related_cats RIGHT OUTER JOIN categories ON pivot_related_cats.rel_category = categories.cid ';
-		$query = $query.'WHERE pivot_related_cats.ref_category = ?';
-		$values = array($id);
-
-		return $this->db->query($query, $values)->result_array();  //give a result set back
+	public function get_data_id($id) {
+		return $this->db->query('SELECT * FROM posts WHERE id = ?', array($id))->row_array();
+	
+	}
+	public function get_category_info() {
+		return $this->db->query('SELECT count(*), category FROM products 
+			JOIN categories ON products.catid = categories.id GROUP BY categories.id')->result_array();
+	}
+	public function get_select_category_info($keyword) {
+		$keyword = "%$keyword%";	
+		return $this->db->query("SELECT count(*), category FROM products 
+		JOIN photos on photos.prod_id = products.pid 
+		JOIN categories ON products.catid = categories.id 
+		WHERE products.description LIKE ? OR products.product LIKE ?
+		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ? 
+		GROUP BY categories.id", 
+		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
+	}
+	public function get_from_db_by_keyword($keyword) {
+		$keyword = "%$keyword%";	
+		return $this->db->query("SELECT * FROM products 
+		JOIN photos on photos.prod_id = products.pid 
+		JOIN categories ON products.catid = categories.id 
+		WHERE products.description LIKE ? OR products.product LIKE ?
+		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ?", 
+		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
+	}
+	public function get_all_orders() {
+		return $this->db->query('SELECT *  FROM orders 
+			JOIN pivot_order_products on order_id = orders.oid
+			JOIN products on pivot_order_products.product_id = products.pid
+			GROUP BY orders.oid
+			ORDER BY orders.created_at DESC')->result_array();
+	}
+	public function get_order_total($oid) {
+		$total = 0;
+		$results = $this->db->query("Select quantity, price from orders
+			join pivot_order_products on order_id = orders.oid
+ 			join products on products.pid = pivot_order_products.product_id
+			where orders.oid = ?", $oid)->result_array();
+		foreach ($results as $result) {
+			$total += $result['price'] * $result['quantity'];
+		}
+		return $total;
+	}
+	public function get_order_by_id($id) {
+		return $this->db->query('SELECT * FROM orders 
+			left join pivot_order_products on order_id = orders.oid 
+			left join products on products.pid = pivot_order_products.product_id 
+			WHERE oid = ?', array($id))->result_array();
 	}
 	//
 	// *************************************************************************
-	public function add_product($values) {
-		// do we need this?  perhaps to update price, taxable product description, etc.
-		$query = 'INSERT INTO products (catid, inventory, added_by, price, taxable, product, description, created_on, modified_on) ';
-		$query = $query.'VALUES (?,?,?,?,?,?,?,now(),now())';
+	// functions that change data in the database
+	//
+	public function add_data($data) {
+		// make this a generic insert by counting the number fields in the assoc array,
+		// and then make a string of (?,?) for that number, and then create a NAMES section
+		// for the fields to insert. --- might be security concern, so we'll have to be careful.
+		//
+		$myDate = date('Y-m-d H:m'); // make a valid date for create and update
+		// only put in title and desc since we are doing triggers for auto updates on timestamp and created
+		$query = 'INSERT INTO posts (?,created_at,modified_at) VALUES (?,NOW(),NOW())';
+		// # values must match field count above.
+		$values = array();
+		// doesn't return anything but a true to show it succeeded. if 0 then broke.
+		// NOT id of the entered item.
 		$tmp = $this->db->query($query, $values);
-
-		return $this->db->$insert_id; // passback the row id for this insertion
+		return $this->db->insert_id; // return id of record inserted. more useful.
 	}
-
-	//
-	// *************************************************************************
-	public function update_product($id, $values) {
-		// do we need this?  perhaps to update price, taxable product description, etc.
-		$query = 'UPDATE products SET carid = ?, inventory = ?, add_by = ?, price = ?, taxable = ?, product = ?, description = ?, modified_on = now() WHERE pid = ?';
-		
-		// ****** we need to add the id onto the values before we execute
-		$values = array($id); // push id of this record onto array for update.
-		return $this->db->query($query, $values);
+	public function update_data($id) {
+		// template
+		$query = 'UPDATE <table> SET fieldname = ?, field2 = ? WHERE id = ?';
 	}
-
 	public function remove_data($id) {
 		// only put in title and desc since we are doing triggers for auto updates on timestamp and created
 		
-		$query = 'DELETE FROM products WHERE pid = ?';
+		$query = 'DELETE FROM <table> WHERE id = ?';
 		$values = array('id' => $id);
-
 		// doesn't return anything but a value to show it succeeded. if 0 then broke.
 		return $this->db->query($query, $values);
-
 	}
-
 }
 ?>

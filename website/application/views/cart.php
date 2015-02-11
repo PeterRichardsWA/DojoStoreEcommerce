@@ -21,6 +21,9 @@
 		table{
 			margin: 0 auto;
 		}
+		.quantity{
+			width:50px;
+		}
 		#total{
 			margin-left:50%;
 			margin-top: 10px;
@@ -40,6 +43,9 @@
 		}
 		p{
 			margin: 20px;
+		}
+		.errors{
+			color:red;
 		}
 	</style>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -73,7 +79,8 @@
 			$subtotal=$item['price']*$item['quantity'];
 			$total=$total+$subtotal;
 			$id=$item['id'];
-			echo "<tr><td>".$item['name']."</td><td>".$item['price']."</td><td>".$item['quantity']."</td><td>".$subtotal."</td><td><a href='/main/remove/".$id."'>X</a></td></tr>";
+			$quantity=$item['quantity'];
+			echo "<tr><td>".$item['name']."</td><td>$".$item['price']."</td><td><form action='/main/update/".$id."' method='post'><input type='number' name='quantity' class='quantity' value='".$quantity."'>"." "."<input type='submit' value='Update Quantity'></form></td><td>".$subtotal."</td><td><a href='/main/remove/".$id."'>X</a></td></tr>";
 		}
 		?>
 	</table>
@@ -83,6 +90,8 @@
 		<a href="/main/delete"><button>Delete Cart</button></a>
 		<a href="/"><button>Continue Shopping</button></a>
 	</div>
+
+	<?php echo "<div class='errors'>".$this->session->flashdata('errors')."</div>"; ?>
 	<form action="/main/order" method="post">
 		<h2>Shipping Information</h2>
 		<p>First Name:<input type="text" name="ship_first"></p>
