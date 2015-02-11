@@ -1,0 +1,49 @@
+* {
+	font-family: 'helvetica neu', verdana, arial;
+	/*outline: 1px solid #8e8e8e;*/
+}
+#container {
+	vertical-align: top;
+	margin: 0 auto;
+	padding: 10px;
+}
+#photos {
+	
+}
+#main-phot {
+	
+}
+.mainpic {
+	vertical-align: middle;
+	text-align: center;	
+}
+.divsmall {
+	float: left;
+	vertical-align: middle;
+	text-align: center;
+	padding: 4px;
+	margin: 5px 3px 0px 0px;
+}
+.picsmall {
+	margin: 0 auto;
+}
+#description p {
+	font-size: 10pt;
+	line-height: 105%;
+	text-align: justify;
+}
+.qtyinput {
+	font-size: 12pt;
+	border: transparent;
+}
+.clear {
+	clear: both;
+}
+#smallpix {
+	width: 345px;
+	text-align: center;
+	padding: 2px;
+}
+#subtitle {
+	font-size: 9pt
+}

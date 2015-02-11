@@ -42,14 +42,14 @@ $route['default_controller'] = "main";
 $route['404_override'] = '';
 $route['admin'] = "admins/index";
 $route['login'] = "admins/login";
-$route['showorder'] = 'admins/showorder';
+$route['showorder/(:num)'] = 'admins/showorder/$1';
 $route['dashboard'] = 'admins/dashboard';
 $route['adminordersearch'] = '';
 $route['adminproducts'] = 'admins/products';
 $route['adminproductsearch'] = '';
 $route['deleteproduct'] = '';
 $route['logoff'] = 'admins/logoff';
-
+$route['search'] = 'filters/search';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

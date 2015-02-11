@@ -63,7 +63,7 @@
 >>>>>>> 84d3bf10f8406bf23bde25b320d871c62b63b3cb
 	</div>
 	<div id="sidebar">
-		<form id="search" action="/main/search">
+		<form id="search" action="search" method="post">
 			<input type="text" name="product">
 			<input type="submit" value="Search">
 		</form>

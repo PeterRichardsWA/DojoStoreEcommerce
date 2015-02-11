@@ -71,11 +71,11 @@
 				</div>
 				<div class="nav navbar-nav">
 					<ul class="nav navbar-nav">
-						<li><a href="dashboard">Orders</a></li>
-						<li><a href="adminproducts">Products</a></li>
+						<li><a href="/dashboard">Orders</a></li>
+						<li><a href="/adminproducts">Products</a></li>
 					</ul>
 				</div>
-				<div class="nav navbar-right navbar-nav"><a href="logoff">log off</a>
+				<div class="nav navbar-right navbar-nav"><a href="/logoff">log off</a>
 				</div>
 			</div>
 		</nav>
