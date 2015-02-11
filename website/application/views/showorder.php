@@ -5,27 +5,27 @@
 			<div class="row">
 				<div class="col-sm-3 bordered" id="orderinfotable">
 					<div class="row">
-						<p>Order ID:<?= $order['id'] ?></p>
+						<p>Order ID:<?= $order[0]['oid'] ?></p>
 					</div>
 					<div class="row">
 						<p>Customer Shipping Info:</p>
 					</div>
 					<div class="row">
-						<p>Name:<?= $order['ship_name'] ?></p>
-						<p>Address: <?= $order['ship_addr'] ?></p>
-						<p>City: <?= $order['ship_city'] ?></p>
-						<p>State:<?= $order['ship_state'] ?></p>
-						<p>Zip:<?= $order['ship_zip'] ?></p>
+						<p>Name:<?= $order[0]['ship_name'] ?></p>
+						<p>Address: <?= $order[0]['ship_street']." ".$order[0]['ship_street2'] ?>
+						<p>City: <?= $order[0]['ship_city'] ?></p>
+						<p>State:<?= $order[0]['ship_state'] ?></p>
+						<p>Zip:<?= $order[0]['ship_zip'] ?></p>
 					</div>
 					<div class="row">
 						<p>Customer Billing Info:</p>
 					</div>
 					<div class="row">
-						<p>Name:<?= $order['bill_name'] ?></p>
-						<p>Address: <?= $order['bill_addr'] ?></p>
-						<p>City: <?= $order['bill_city'] ?></p>
-						<p>State:<?= $order['bill_state'] ?></p>
-						<p>Zip:<?= $order['bill_zip'] ?></p>
+						<p>Name:<?= $order[0]['bill_name'] ?></p>
+						<p>Address: <?= $order[0]['bill_street']. " ".$order[0]['bill_street2'] ?></p>
+						<p>City: <?= $order[0]['bill_city'] ?></p>
+						<p>State:<?= $order[0]['bill_state'] ?></p>
+						<p>Zip:<?= $order[0]['bill_zip'] ?></p>
 					</div>
 				</div>
 				<div class="col-sm-8 col-sm-offset-1">
@@ -41,10 +41,10 @@
 									</tr>
 							</thead>
 							<tbody>
-<?php 							foreach ($order['items'] as $item) {
+<?php 							foreach ($order as $item) {
 ?>								<tr>
-									<TD><?= $item['id'] ?></TD>
-	 								<TD><?= $item['name'] ?></TD>
+									<TD><?= $item['pid'] ?></TD>
+	 								<TD><?= $item['product'] ?></TD>
 	 								<TD>$<?= $item['price'] ?></TD>
 	 								<TD><?= $item['quantity'] ?></TD>
 	 								<TD>$<?= $item['price']*$item['quantity'] ?></TD>
@@ -56,7 +56,7 @@
 					<div class="row">
 						<div class="col-sm-5 bordered" id="statusbox">
 							<!-- use jquery to set background color basen on status. -->
-							<h2>Status: <?= $order['status'] ?></h2>
+							<h2>Status: <?= $order[0]['status'] ?></h2>
 						</div>
 						<div class="col-sm-2">
 						</div>

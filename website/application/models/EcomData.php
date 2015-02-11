@@ -79,7 +79,10 @@ class EcomData extends CI_model {
 	}
 
 	public function get_order_by_id($id) {
-		return $this->db->query('SELECT * FROM orders WHERE oid = ?', array($id))->row_array();
+		return $this->db->query('SELECT * FROM orders 
+			left join pivot_order_products on order_id = orders.oid 
+			left join products on products.pid = pivot_order_products.product_id 
+			WHERE oid = ?', array($id))->result_array();
 	}
 	//
 	// *************************************************************************
