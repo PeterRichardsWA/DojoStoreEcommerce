@@ -15,7 +15,7 @@ class Main extends CI_Controller {
 		$productInfo = $this->EcomData->get_all_product_info();	
 		$categories = $this->EcomData->get_category_info();
 		$cart=$this->cartTotal();
-		$this->load->view('landing',array('productInfo'=>$productInfo,'cart'=>$cart , 'numproducts' => count($productInfo), 'categories' => $categories));
+		$this->load->view('landing',array('pagenum' => 1, 'productInfo'=>$productInfo,'cart'=>$cart , 'numproducts' => count($productInfo), 'categories' => $categories));
 
 	}
 
@@ -125,7 +125,7 @@ class Main extends CI_Controller {
 		$this->load->view('login');
 	} 
 
-	public function productinfogpg($id) {
+	public function productinfopg($id) {
 		$data = $this->EcomData->get_product_by_id($id);
 		$this->load->view('productinfo', array('data' =>$data));
 	}

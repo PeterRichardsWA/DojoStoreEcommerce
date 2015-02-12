@@ -48,7 +48,9 @@
 		#nav{
 			margin-left: 85%
 		}
-
+		#footer{
+			margin-left:0px 300px;
+		}
 
 		.cell {
 			border: 1px solid black;
@@ -79,10 +81,9 @@
 	<script>
 		$(document).on('submit', '#search', function(){	
 			$.post(
-				$(this).attr('action'),
+				'search/0',
 				$(this).serialize(),
 				function(data){
-
 					console.log(data);
 					$('#category').html("<li><a href='/'>All Products</a></li>");
 					$(data.categories).each(function(){
@@ -104,6 +105,33 @@
 			return false;
 		});
 
+		$(document).on('click', '#footer a',function(){
+			$.post(
+				$(this).attr('href'),
+				$(this).serialize(),
+				function(data) {
+					console.log(data);
+					$('#category').html("<li><a href='/'>All Products</a></li>");
+					$(data.categories).each(function(){
+						$('#category').append(
+							"<li><a href='search/"+this.category+"'>"+this.category+" ("+this.count+")</a></li>");
+					});
+					$('#productdisplaygrid').html('');
+					$(data.results).each(function(){	
+							$('#productdisplaygrid').append(
+								"<div class='cell'>"+
+								"<a href='products/"+this.pid+"'><img src='assets/images/"+this.file_path+"'></a>"+
+								"<div class='infobanner'><div class='infocell'>"+
+								"<h6>"+this.product+"</h6></div><div class='infocell'>"+
+								"<h4>"+this.price+"</h4></div></div></div></div>");
+					}); //results.each
+					$('#footer').html('<h6><a href="admin">Admin Login</a></h6>');
+					$('#footer').prepend(data.links);
+				}, "json"
+				);
+			return false; 
+	//	});
+
 /*		$('option[value="price"]').on('click', function(){
 			alert('hi');
 	/*<?php  foreach ($productInfo as $row) {
@@ -113,7 +141,7 @@
 					}
 					array_multisort($price, SORT_ASC, $productInfo); 
 					var_dump($productInfo)?> */
-	//	}); 
+		}); 
 	</script>
 </head>
 <body>
@@ -137,7 +165,7 @@
 		</ul>
 	</div>
 	<div id="content">
-		<h2>Products (Page $)</h2>
+		<h2>Products (Page <?=$pagenum ?>)</h2>
 		<div id="nav">
 		<a href="#">Prev</a>
 		<a href="#">Next</a>
@@ -150,11 +178,10 @@
 		</form>
 		</div>
 <?php 	$this->load->view('productdisplay');
-?>			
-	</div>
-</div></div>
-	<div id="footer">
-		<h6><a href="admin">Admin Login</a></h6>
-	</div>
+?>	</div>		<!--</div></div> -->
+		<div id="footer">
+			<h6><a href="admin">Admin Login</a></h6>
+		</div>
+
 </body>
 </html>

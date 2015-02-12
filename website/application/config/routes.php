@@ -49,7 +49,7 @@ $route['adminproducts'] = 'admins/products';
 $route['adminproductsearch'] = '';
 $route['deleteproduct'] = '';
 $route['logoff'] = 'admins/logoff';
-$route['search'] = 'filters/search';
+$route['search/(:num)'] = 'filters/search/$1';
 $route['products/(:num)'] = "main/productinfopg/$1";
 $route['sortprodbyprice'] = 'filters/sortprodbyprice';
 
