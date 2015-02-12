@@ -130,5 +130,4 @@ class Main extends CI_Controller {
 		$this->load->view('productinfo', array('data' =>$data));
 	}
 }
-
 //end of main controller

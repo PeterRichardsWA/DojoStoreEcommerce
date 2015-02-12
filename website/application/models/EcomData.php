@@ -42,8 +42,8 @@ class EcomData extends CI_model {
 	public function get_select_category_info($keyword) {
 		$keyword = "%$keyword%";	
 		return $this->db->query("SELECT count(*) AS count, category FROM products 
-		JOIN photos on photos.prod_id = products.pid 
-		JOIN categories ON products.catid = categories.id 
+		LEFT JOIN photos on photos.prod_id = products.pid 
+		LEFT JOIN categories ON products.catid = categories.id 
 		WHERE products.description LIKE ? OR products.product LIKE ?
 		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ? 
 		GROUP BY categories.id", 

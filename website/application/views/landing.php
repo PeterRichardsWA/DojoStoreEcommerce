@@ -77,25 +77,18 @@
 		}
 	</style>
 	<script>
-		function draw_pages(results) {
-			//divide results by 15 to determine # of pages
-			//append html links to bottom of screen
-		}
-
 		$(document).on('submit', '#search', function(){	
 			$.post(
 				$(this).attr('action'),
 				$(this).serialize(),
 				function(data){
+
 					console.log(data);
 					$('#category').html("<li><a href='/'>All Products</a></li>");
 					$(data.categories).each(function(){
 						$('#category').append(
 							"<li><a href='search/"+this.category+"'>"+this.category+" ("+this.count+")</a></li>");
 					});
-					if (data.results.length > 15) {
-							draw_pages(data.results.length);
-					}
 					$('#productdisplaygrid').html('');
 					$(data.results).each(function(){	
 							$('#productdisplaygrid').append(
@@ -105,10 +98,22 @@
 								"<h6>"+this.product+"</h6></div><div class='infocell'>"+
 								"<h4>"+this.price+"</h4></div></div></div></div>");
 					}); //results.each
+					$('#footer').prepend(data.links);
 				}, "json" //data
 				);
 			return false;
 		});
+
+/*		$('option[value="price"]').on('click', function(){
+			alert('hi');
+	/*<?php  foreach ($productInfo as $row) {
+ 						foreach ($row as $key => $value){
+    						${$key}[]  = $value; //Creates $volume, $edition, $name and $type arrays.
+  		  				}	  
+					}
+					array_multisort($price, SORT_ASC, $productInfo); 
+					var_dump($productInfo)?> */
+	//	}); 
 	</script>
 </head>
 <body>
@@ -136,19 +141,16 @@
 		<div id="nav">
 		<a href="#">Prev</a>
 		<a href="#">Next</a>
-		<form action="/main/sort" method="post">
-			<p>Sort By:<select><option>Price</option><option>Most Popular</option></select></p>
+		<form action="sortprodbyprice" id="sortprodbyprice" method="post">
+			<input type="hidden" value="$productinfo" name="productInfo">
+			<p>Sort By:<select>
+						<option value="price">Price</option>
+						<option value="pop">Most Popular</option>
+					</select></p>
 		</form>
 		</div>
 <?php 	$this->load->view('productdisplay');
-?>		
-		<?php 
-			$pages=floor(count($productInfo)/15)+1;
-			for($i=1;$i<=$pages;$i++){
-				echo "<a href='/main/page/".$i."'>".$i."</a>";
-			}
-		?>		
-
+?>			
 	</div>
 </div></div>
 	<div id="footer">
