@@ -4,6 +4,27 @@
 	<meta charset="UTF-8">
 	<title>The Store: Product Info</title>
 	<link rel="stylesheet" type="text/css" href="/assets/css/details.css">
+	<style type="text/css">
+	*{
+			margin: 0px;
+			padding: 0px;
+		}
+		#header{
+			background-color: black;
+			color:white;
+			width:100%;
+			height:50px;
+			font-size: 36px;
+			margin-bottom: 50px;
+		}
+		#header a{
+			margin-left: 60%;
+			color:white;
+		}
+		#description, #photos{
+			display: inline-block;
+		}
+	</style>
 	<script type="text/javascript" src="/assets/scripts/jquery-2.1.3.min.js"></script>
 	<script type="text/javascript">
 
@@ -45,7 +66,10 @@
 	</script>
 </head>
 <body>
-
+	<div id="header">
+		Dojo eCommerce
+		<a href="/main/cart">View Cart<?php echo "(".$cart['items']."): $".$cart['total']; ?></a>
+	</div>
 <?php
 	// echo "<pre>";
 	// var_dump($data);
@@ -57,7 +81,6 @@
 	$caption = $data[0]['caption'];
 	// echo "****".$main_file;
 	// exit;
-
 ?>
 <div id="container">
 
@@ -92,7 +115,11 @@
 	<div id="description">
 		<p><?= $data[0]['description'] ?></p>
 		<div id="buyarea">
-			Qty: <input id='qty' valtag='<?=$data[0]['price']?>' type="text" size=3 name="qty" maxlength=3 class="qtyinput"> X <?=$data[0]['price'] ?> :: <label id='total' for='total'>$0.00</label>
+			<form action="/main/add" method="post">
+				<input type="hidden" name="product" value="<?php echo $title ?>">
+			Qty: <input id='qty' valtag='<?=$data[0]['price']?>' type='number' min='1' size=3 name="qty" maxlength=3 value=0 class="qtyinput"> X <?=$data[0]['price'] ?> :: <label id='total' for='total'>$0.00</label>
+			<input type="submit" value="Add to Cart">
+			</form>
 		</div>
 	</div>
 	<div class="clear"></div>

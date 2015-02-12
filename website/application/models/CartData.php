@@ -31,6 +31,13 @@ class CartData extends CI_model {
 	
 	}
 
+	public function get_product_by_id($id) {
+		return $this->db->query('SELECT * FROM products 
+		LEFT JOIN photos ON photos.prod_id = products.pid
+		WHERE pid = ? ', $id)->row_array();
+	
+	}
+
 	//
 	// *************************************************************************
 	// functions that change data in the database
@@ -74,22 +81,22 @@ class CartData extends CI_model {
 
 	}
 
-	public function add_to_cart($cartid=0, $prodid=0, $qty=0) {
+	public function add_to_cart($product, $qty) {
 		
 		// first check to see if item exists in cart already. if so, than just add to qty
 		// otherwise create a new entry in cart for this prodid.
 		
-		$query = "SELECT * FROM pivot_order-products WHERE order_id = ? AND product_id = ?";			
-		$values = array($cartid,$prodid);
-		$results = $this->db->query($query,$values);
+		$query = "SELECT * FROM carts WHERE name = ?";			
+		$values = array($product);
+		$results = $this->db->query($query,$values)->row_array();
 		if($results) {
-			$total = $results('quantity') + $qty;
-			$query = "UPDATE pivot_order-products SET quantity = ?, SET modified_on = NOW() WHERE order_id = ? AND product_id = ?";
-			$values = array($total, $cartid, $prodid);
-		} else {
-			$query = "INSERT INTO pivot_order-products (order_id,product_id,quantity,created_on,modified_on) VALUES ";
-			$query = "(?,?,?,NOW(),NOW())";
-			$values = array($cartid, $prodid, $qty);
+			$total = $results['quantity'] + $qty;
+			$query = "UPDATE carts SET quantity = ? WHERE name = ?";
+			$values = array($total, $product);
+		} 
+		else {
+			$query = "INSERT INTO carts (name,quantity) VALUES (?,?)";
+			$values = array($product, $qty);
 		}
 		return $this->db->query($query, $values);
 	}

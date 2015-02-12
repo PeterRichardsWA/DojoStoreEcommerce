@@ -5,9 +5,9 @@
 		<div class="container">
 			<div class="row" id="dashheader">
 				<div class="col-sm-2"> <!-- search box -->
-					<form role="form" action="adminordersearch" method="post">
+					<form role="form" action="/filters/search_orders" method="post">
 						<div class="form-group">
-							<input type="text" class="form-control" name="adminordersearch" placeholder="search">
+							<input type="text" class="form-control" name="keyword" placeholder="search">
 						</div>
 					</form>
 				</div> <!-- search box -->

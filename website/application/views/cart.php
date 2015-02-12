@@ -80,7 +80,7 @@
 			$total=$total+$subtotal;
 			$id=$item['id'];
 			$quantity=$item['quantity'];
-			echo "<tr><td>".$item['name']."</td><td>$".$item['price']."</td><td><form action='/main/update/".$id."' method='post'><input type='number' name='quantity' class='quantity' value='".$quantity."'>"." "."<input type='submit' value='Update Quantity'></form></td><td>".$subtotal."</td><td><a href='/main/remove/".$id."'>X</a></td></tr>";
+			echo "<tr><td>".$item['name']."</td><td>$".$item['price']."</td><td><form action='/main/update/".$id."' method='post'><input type='number' name='quantity' class='quantity' value='".$quantity."'>"." "."<input type='submit' value='Update Quantity'></form></td><td>$".$subtotal."</td><td><a href='/main/remove/".$id."'>X</a></td></tr>";
 		}
 		?>
 	</table>

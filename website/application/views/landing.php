@@ -1,5 +1,6 @@
 <html>
 <head>
+	<meta charset="utf-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 	<title>Products</title>
@@ -61,7 +62,7 @@
 		.infobanner {
 			border:1px solid black;
 			height:36px;
-			margin-top:-36px;
+			margin-top:-56px;
 			background-color:#bbbbbb;
 			opacity: 0.7;
 		}
@@ -70,6 +71,58 @@
 			width:45%;
 		}
 	</style>
+	<script>
+		$(document).on('submit', '#search', function(){	
+			$.post(
+				$(this).attr('action'),
+				$(this).serialize(),
+				function(data){
+					console.log(data);
+					$('#category').html("<li><a href='/'>All Products</a></li>");
+					$(data.categories).each(function(){
+						$('#category').append(
+							"<li><a href='search/"+this.category+"'>"+this.category+" ("+this.count+")</a></li>");
+					});
+					$('#productdisplaygrid').html('');
+					$(data.results).each(function(){	
+							$('#productdisplaygrid').append(
+								"<div class='cell'>"+
+								"<a href='products/"+this.pid+"'><img src='assets/images/"+this.file_path+"'></a>"+
+								"<div class='infobanner'><div class='infocell'>"+
+								"<h6>"+this.product+"</h6></div><div class='infocell'>"+
+								"<h4>"+this.price+"</h4></div></div></div></div>");
+					}); //results.each
+					$('#footer').prepend(data.links);
+				}, "json" //data
+				);
+			return false;
+		});
+		$(document).on('submit', '#sort', function(){
+			$.post(
+				$(this).attr('action'),
+				$(this).serialize(),
+				function(data){
+					console.log(data);
+					$('#category').html("<li><a href='/'>All Products</a></li>");
+					$(data.categories).each(function(){
+						$('#category').append(
+							"<li><a href='search/"+this.category+"'>"+this.category+" ("+this.count+")</a></li>");
+					});
+					$('#productdisplaygrid').html('');
+					$(data.results).each(function(){	
+							$('#productdisplaygrid').append(
+								"<div class='cell'>"+
+								"<a href='products/"+this.pid+"'><img src='assets/images/"+this.file_path+"'></a>"+
+								"<div class='infobanner'><div class='infocell'>"+
+								"<h6>"+this.product+"</h6></div><div class='infocell'>"+
+								"<h4>"+this.price+"</h4></div></div></div></div>");
+					}); //results.each
+					$('#footer').prepend(data.links);
+				},
+				"json");
+			return false;
+		});
+	</script>
 </head>
 <body>
 	<div id="header">
@@ -83,11 +136,11 @@
 			<input type="submit" value="Search">
 		</form>
 		<h4>Categories:</h4>
-		<ul>
+		<ul id="category">
 			<li><a href='/'>All Products</a></li>
-<?php 		foreach ($categories as $category) {
-?> 			<li><a href='#'><?=$category['category']?> (<?= $category['count(*)']?>)</a></li>
-<?php 		}
+<?php 			foreach ($categories as $category) {
+?> 					<li><a href='#'><?=$category['category']?> (<?= $category['count']?>)</a></li>
+<?php 			}
 ?> 
 		</ul>
 	</div>
@@ -96,19 +149,18 @@
 		<div id="nav">
 		<a href="#">Prev</a>
 		<a href="#">Next</a>
-		<form action="/main/sort" method="post">
-			<p>Sort By:<select><option>Price</option><option>Most Popular</option></select></p>
+		<form action="/filters/sortprodbyprice" id="sort" method="post">
+			<input type="hidden" value="$productinfo" name="productInfo">
+			<p>Sort By:<select>
+						<option value="price">Price</option>
+						<option value="pop">Most Popular</option>
+					</select>
+					<input type="submit" value="Sort">
+			</p>
 		</form>
 		</div>
 <?php 	$this->load->view('productdisplay');
-?>		
-		<?php 
-			$pages=floor(count($productInfo)/15)+1;
-			for($i=1;$i<=$pages;$i++){
-				echo "<a href='/main/page/".$i."'>".$i."</a>";
-			}
-		?>		
-
+?>			
 	</div>
 </div></div>
 	<div id="footer">

@@ -50,6 +50,8 @@ $route['adminproductsearch'] = '';
 $route['deleteproduct'] = '';
 $route['logoff'] = 'admins/logoff';
 $route['search'] = 'filters/search';
+$route['products/(:num)'] = "main/productinfopg/$1";
+$route['sortprodbyprice'] = 'filters/sortprodbyprice';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

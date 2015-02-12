@@ -42,16 +42,17 @@ class Main extends CI_Controller {
 		$cart=$this->cartTotal();
 		$this->load->view('cart',array('cartInfo'=>$cartInfo,'cart'=>$cart));
 	}
-	public function info()
-	{
-		//Load the view for the Product Info page.
+	public function productinfogpg($id) {
+		$data = $this->EcomData->get_product_by_id($id);
 		$cart=$this->cartTotal();
-		$this->load->view('productinfo',array('cart'=>$cart));
+		$this->load->view('product_info',array('cart'=>$cart,'data'=>$data));
 	}
 	public function add(){
-		//from Product Info page.  This will add an item to the cart, but not currently functional.
-		$product=$this->input->post('product_id');
-		$quantity=$this->input->post('quantity');
+		$product=$this->input->post('product');
+		$qty=$this->input->post('qty');
+		$this->load->model('CartData');
+		$this->CartData->add_to_cart($product,$qty);
+		redirect('/main/cart');
 	}
 	public function update($id)
 	{
@@ -82,8 +83,12 @@ class Main extends CI_Controller {
 	{
 		//when an order is placed, load the confirmation page.
 		//Need to add Stripe API and database interaction.
-
-		$this->validation();
+			//validation the order form before doing any data processing
+			$this->validation();
+			$this->load->model('EcomData');
+			$this->load->model('CartData');
+			$cart=$this->CartData->get_all_data();
+			//address information goes into the "orders" table
 			$shipping=array('first'=>$this->input->post('ship_first'),
 							'last'=>$this->input->post('ship_last'),
 							'street1'=>$this->input->post('ship_street1'),
@@ -105,10 +110,23 @@ class Main extends CI_Controller {
 								'zip'=>$this->input->post('bill_zip')
 							);
 			}
+			//function to add address informatino to database
+			$this->EcomData->add_order($shipping);
+			//get the order id of the order that got added
+			$oid=$this->EcomData->get_order_id();
+			//add the ordered products to the pivot table
+			echo $oid;
+			foreach ($cart as $item) {
+				$qty=$item['quantity'];
+				$pid=$item['pid'];
+				$this->EcomData->populate_order($oid,$pid,$qty);
+			}
+			//No card verification or stripe API added yet
 			$card=array('number'=>$this->input->post('bill_card'),
 							'ccv'=>$this->input->post('bill_security'),
 							'expiration'=>$this->input->post('bill_date')
 							);
+			//session data created for confirmation page
 			$this->session->set_userdata('shipping',$shipping);
 			$this->session->set_userdata('billing',$billing);
 			$this->session->set_userdata('card',$card);
@@ -120,16 +138,13 @@ class Main extends CI_Controller {
 	{
 		$this->load->helper(array('form','url'));
 		$this->load->library('form_validation');
-		foreach ($this->input->post() as $field=>$value) {
-			$this->form_validation->set_rules($field,$field,'trim|required');
-		}
-		$this->form_validation->set_rules('ship_street2','ship_street2','');
-		$this->form_validation->set_rules('bill_street2','bill_street2','');
+		$this->form_validation->set_rules('ship_first','First Name','trim|required|alpha');
+		$this->form_validation->set_rules('ship_last','Last Name','trim|required|alpha');
+		$this->form_validation->set_rules('ship_street1','Street Address','trim|required');
+		$this->form_validation->set_rules('ship_city','City','trim|required');
 		$this->form_validation->set_rules('bill_card','Card Number','trim|required|exact_length[16]|numeric');
 		$this->form_validation->set_rules('ship_zip','Shipping Zip Code','trim|required|exact_length[5]|numeric');
-		$this->form_validation->set_rules('bill_zip','Billing Zip Code','trim|required|exact_length[5]|numeric');
 		$this->form_validation->set_rules('bill_security','CCV','trim|required|exact_length[3]|numeric');
-		var_dump($this->input->post());
 		if($this->form_validation->run()===FALSE){
 			$this->session->set_flashdata('errors',validation_errors());
 			redirect('/main/cart');

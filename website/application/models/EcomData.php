@@ -19,9 +19,20 @@ class EcomData extends CI_model {
 		return $this->db->query('SELECT * FROM posts ORDER BY created_at DESC')->result_array();
 	
 	}
-	public function get_all_product_info() {
-		return $this->db->query('SELECT * FROM products LEFT JOIN photos ON products.pid = photos.prod_id ORDER BY products.created_on DESC')->result_array();
+
+	public function get_product_by_id($id) {
+		return $this->db->query('SELECT * FROM products 
+		LEFT JOIN photos ON photos.prod_id = products.pid
+		WHERE pid = ? ', $id)->result_array();
 	
+	}
+
+	public function get_all_product_info() {
+		return $this->db->query('SELECT * FROM products LEFT JOIN photos ON products.pid = photos.prod_id GROUP BY products.pid ORDER BY products.created_on DESC')->result_array();
+	
+	}
+	public function get_all_products_by_price(){
+		return $this->db->query('SELECT * FROM products LEFT JOIN photos ON products.pid = photos.prod_id GROUP BY products.pid ORDER BY products.price ASC')->result_array();	
 	}
 	public function get_data_id($id) {
 		return $this->db->query('SELECT * FROM posts WHERE id = ?', array($id))->row_array();
@@ -44,18 +55,26 @@ class EcomData extends CI_model {
 	public function get_from_db_by_keyword($keyword) {
 		$keyword = "%$keyword%";	
 		return $this->db->query("SELECT * FROM products 
-		JOIN photos on photos.prod_id = products.pid 
-		JOIN categories ON products.catid = categories.id 
+		LEFT JOIN photos on photos.prod_id = products.pid 
+		LEFT JOIN categories ON products.catid = categories.id 
 		WHERE products.description LIKE ? OR products.product LIKE ?
 		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ?", 
+		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
+	}
+	public function get_order_from_db_by_keyword($keyword) {
+		$keyword = "%$keyword%";	
+		return $this->db->query('SELECT *  FROM orders 
+		LEFT JOIN pivot_order_products on order_id = orders.oid
+		LEFT JOIN products on pivot_order_products.product_id = products.pid
+		WHERE orders.name LIKE ? OR orders.ship_street LIKE ?
+		OR orders.ship_city LIKE ? OR orders.ship_state LIKE ? OR products.name LIKE ?', 
 		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
 	}
 	public function get_all_orders() {
 		return $this->db->query('SELECT *  FROM orders 
 			JOIN pivot_order_products on order_id = orders.oid
 			JOIN products on pivot_order_products.product_id = products.pid
-			GROUP BY orders.oid
-			ORDER BY orders.created_at DESC')->result_array();
+			GROUP BY orders.oid')->result_array();
 	}
 	public function get_order_total($oid) {
 		$total = 0;
@@ -73,6 +92,21 @@ class EcomData extends CI_model {
 			left join pivot_order_products on order_id = orders.oid 
 			left join products on products.pid = pivot_order_products.product_id 
 			WHERE oid = ?', array($id))->result_array();
+	}
+
+	public function add_order($shipping){
+		$query='INSERT INTO orders (status, ship_first_name, ship_last_name,ship_street, ship_street2, ship_city, ship_state, ship_zip) values (?,?,?,?,?,?,?,?)';
+		$values=array(0)+$shipping;
+		return $this->db->query($query,$values);
+	}
+	public function get_order_id(){
+		$result=$this->db->query('SELECT MAX(oid) from orders')->row_array();
+		return $result['MAX(oid)'];
+	}
+	public function populate_order($oid,$pid,$quantity){
+		$query='INSERT INTO pivot_order_products (order_id,product_id,quantity) VALUES (?,?,?)';
+		$values=array($oid,$pid,$quantity);
+		return $this->db->query($query,$values);
 	}
 	//
 	// *************************************************************************
