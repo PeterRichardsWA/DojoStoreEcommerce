@@ -100,7 +100,7 @@
 					$(data.results).each(function(){	
 							$('#productdisplaygrid').append(
 								"<div class='cell'>"+
-								"<img src='assets/images/"+this.file_path+"'>"+
+								"<a href='products/"+this.pid+"'><img src='assets/images/"+this.file_path+"'></a>"+
 								"<div class='infobanner'><div class='infocell'>"+
 								"<h6>"+this.product+"</h6></div><div class='infocell'>"+
 								"<h4>"+this.price+"</h4></div></div></div></div>");

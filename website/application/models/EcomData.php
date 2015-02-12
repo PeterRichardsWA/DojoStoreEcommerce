@@ -30,7 +30,7 @@ class EcomData extends CI_model {
 	public function get_product_by_id($id) {
 		return $this->db->query('SELECT * FROM products 
 		LEFT JOIN photos ON photos.prod_id = products.pid
-		WHERE pid = ? ', $id)->row_array();
+		WHERE pid = ? ', $id)->result_array();
 	
 	}
 
@@ -52,11 +52,11 @@ class EcomData extends CI_model {
 
 	public function get_from_db_by_keyword($keyword) {
 		$keyword = "%$keyword%";	
-		return $this->db->query("SELECT * FROM products 
-		LEFT JOIN photos on photos.prod_id = products.pid 
-		LEFT JOIN categories ON products.catid = categories.id 
-		WHERE products.description LIKE ? OR products.product LIKE ?
-		OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ?", 
+		return $this->db->query("SELECT * FROM products LEFT JOIN photos on photos.prod_id = products.pid 
+			LEFT JOIN categories ON products.catid = categories.id 
+			WHERE products.description LIKE ? OR products.product LIKE ?
+			OR categories.category LIKE ? OR photos.caption LIKE ? OR photos.file_path LIKE ? 
+			GROUP by products.pid ", 
 		array($keyword, $keyword, $keyword, $keyword, $keyword))->result_array();
 	}
 
